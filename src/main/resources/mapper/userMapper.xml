@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ago.masterslaves.mapper.UserMapper">
+
+    <select id="selectAll" parameterType="com.ago.masterslaves.bean.User" resultType="com.ago.masterslaves.bean.User">
+        select
+            name,
+            age,
+            sex
+        from
+            a_user
+    </select>
+
+    <select id="selectByCondition" parameterType="com.ago.masterslaves.bean.User" resultType="com.ago.masterslaves.bean.User">
+        select
+            name,
+            age,
+            sex
+        from
+            a_user
+        where
+        <if test="name != null and name != '' ">
+            name like concat('%',#{name},'%')
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.ago.masterslaves.bean.User">
+        insert into a_user(name,age,sex)values(#{name},#{age},#{sex})
+    </insert>
+
+    <update id="update" parameterType="com.ago.masterslaves.bean.User">
+        update a_user set
+        <if test="name != null and name != '' ">
+            name = #{name}
+        </if>
+        <if test="age != null and name != '' ">
+            age = #{age}
+        </if>
+        <if test="sex != null">
+            sex = #{sex}
+        </if>
+    </update>
+
+</mapper>

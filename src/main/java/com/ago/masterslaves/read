@@ -1,0 +1,6 @@
+
+
+
+思路:
+
+    创建多个数据源并保存子啊 TargetDataSource(Map集合)中, 在项目运行期间通过动态路由 DataSourceRoutingKey 在获取数据库连接之前通过key 获取需要只能的数据源.
