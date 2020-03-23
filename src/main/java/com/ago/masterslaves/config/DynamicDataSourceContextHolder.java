@@ -11,8 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @ClassName: DynamicDataSourceContextHolder(动态数据源上下文保持器)
- * @Describe:
- * 该类负责处理多数据源切换
+ * @Describe: 该类负责处理多数据源切换
  * @Data: 2020/3/1915:58
  * @Author: Ago
  * @Version 1.0
@@ -26,9 +25,10 @@ public class DynamicDataSourceContextHolder {
 
     /* 用户轮询的计数器 */
     private static int count = 0;
-
     /* 为每个线程维护变量，以避免影响其他线程 */
-    private static final ThreadLocal<Object> CONTEXT_HOLDER =  ThreadLocal.withInitial(DataSourceEnum.MASTER);
+    private static final ThreadLocal<Object> CONTEXT_HOLDER = ThreadLocal.withInitial(DataSourceEnum.MASTER);
+//    /* 为每个线程维护变量，以避免影响其他线程 */
+//    private static final ThreadLocal<Object> CONTEXT_HOLDER = new ThreadLocal<Object>();
 
     /* 所有数据源集合 */
     public static List<Object> dataSourceKeys = Lists.newArrayList();
@@ -39,28 +39,29 @@ public class DynamicDataSourceContextHolder {
 
     /**
      * 选择数据源
+     *
      * @param key
      */
-    public static void setKey(String key){
+    public static void setKey(String key) {
         CONTEXT_HOLDER.set(key);
     }
 
     /**
      * 默认选择主数据源
      */
-    public static void userMaster(){
+    public static void userMaster() {
         CONTEXT_HOLDER.set(DataSourceEnum.MASTER);
     }
 
     /**
      * 轮询的方式使用从库
      */
-    public static void userSlavesDataSource(){
+    public static void userSlavesDataSource() {
         lock.lock();
         try {
             int dataSourceIndex = count % slavesSourceKey.size();
-            CONTEXT_HOLDER.set(String.valueOf(slavesSourceKey.get(dataSourceIndex)));
-            count ++;
+            CONTEXT_HOLDER.set(slavesSourceKey.get(dataSourceIndex));
+            count++;
         } catch (Exception e) {
             logger.error(" change slaves fail , change master");
             e.printStackTrace();
@@ -70,15 +71,15 @@ public class DynamicDataSourceContextHolder {
     }
 
 
-    public static Object getDatasourceKey(){
-        return  CONTEXT_HOLDER.get();
+    public static Object getDatasourceKey() {
+        return CONTEXT_HOLDER.get();
     }
 
-    public static void clearDataSource(){
+    public static void clearDataSource() {
         CONTEXT_HOLDER.remove();
     }
 
-    public static boolean containDataSourceKey(String key){
+    public static boolean containDataSourceKey(String key) {
         return dataSourceKeys.contains(key);
     }
 }

@@ -27,7 +27,7 @@ import java.util.Map;
  * @Version 1.0
  */
 @Configuration
-public class DataSourceConfigurer {
+public class DataSourceConfigure {
 
     @Value("${mybatis.mapper-locations}")
     private String mapperLocation;
@@ -39,7 +39,7 @@ public class DataSourceConfigurer {
         return DruidDataSourceBuilder.create().build();
     }
 
-    @Bean("Slaves")
+    @Bean("slaves")
     @ConfigurationProperties(prefix = "spring.datasource.dynamic.datasource.slave")
     public DataSource read() {
         return DruidDataSourceBuilder.create().build();
