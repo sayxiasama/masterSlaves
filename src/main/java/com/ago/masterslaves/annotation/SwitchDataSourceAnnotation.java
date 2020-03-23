@@ -1,4 +1,4 @@
-package com.ago.masterslaves.bean;
+package com.ago.masterslaves.annotation;
 
 import java.lang.annotation.*;
 
