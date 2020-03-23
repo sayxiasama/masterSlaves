@@ -1,11 +1,13 @@
 package com.ago.masterslaves.mapper;
 
+import com.ago.masterslaves.bean.SwitchDataSourceAnnotation;
 import com.ago.masterslaves.bean.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@SwitchDataSourceAnnotation
 public interface UserMapper {
 
     void save(User user);
