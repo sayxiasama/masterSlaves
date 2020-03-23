@@ -3,6 +3,7 @@ package com.ago.masterslaves.controller;
 import com.ago.masterslaves.bean.User;
 import com.ago.masterslaves.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,13 +34,13 @@ public class UserController {
     }
 
     @RequestMapping("/save")
-    public String save(User user){
+    public String save(@RequestBody User user){
         userService.save(user);
         return "success";
     }
 
     @RequestMapping("/update")
-    public String update(User user){
+    public String update(@RequestBody User user){
         userService.update(user);
         return "success";
     }

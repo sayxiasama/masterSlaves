@@ -2,10 +2,12 @@ package com.ago.masterslaves.config;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @ClassName:DynaminDataSourceAspect
@@ -14,13 +16,15 @@ import org.slf4j.LoggerFactory;
  * @Author:Ago
  * @Version 1.0
  */
+@Aspect
+@Component
 public class DynamicDataSourceAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicDataSourceAspect.class);
 
     private static final String[] QUERY_PREFIX = {"select"};
 
-    @Pointcut("execution(* com.ago.masterslaves.mapper.*(..))")
+    @Pointcut("execution(* com.ago.masterslaves.mapper..*.*(..))")
     public void doAspect() {
     }
 
@@ -33,7 +37,7 @@ public class DynamicDataSourceAspect {
         }
     }
 
-    @After("doAspect")
+    @After("doAspect()")
     public void restoreDataSource(JoinPoint point) {
         DynamicDataSourceContextHolder.clearDataSource();
         logger.info("Restore DataSource to [{}] in Method [{}]",DynamicDataSourceContextHolder.getDatasourceKey(), point.getSignature());

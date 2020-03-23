@@ -70,11 +70,13 @@ public class DataSourceConfigurer {
      *  Bean 的属性中，如果没有使用 *.xml 则可以不用该配置，否则将会产生 invalid bond statement 异常
      */
     @Bean
-    @ConfigurationProperties(prefix = "mybatis")
+//    @ConfigurationProperties(prefix = "mybatis")
     public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         // 配置数据源，此处配置为关键配置，如果没有将 dynamicDataSource 作为数据源则不能实现切换
         sqlSessionFactoryBean.setDataSource(dynamicDataSource());
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.ago.masterslaves.mapper");
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*Mapper.xml"));
 //        PathMatchingResourcePatternResolver resolve = new PathMatchingResourcePatternResolver();
 //        Resource[] resources = resolve.getResources(mapperLocation);
 //        sqlSessionFactoryBean.setMapperLocations(resources);

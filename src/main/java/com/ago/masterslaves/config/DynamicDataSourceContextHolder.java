@@ -70,8 +70,8 @@ public class DynamicDataSourceContextHolder {
     }
 
 
-    public static String getDatasourceKey(){
-        return (String) CONTEXT_HOLDER.get();
+    public static Object getDatasourceKey(){
+        return  CONTEXT_HOLDER.get();
     }
 
     public static void clearDataSource(){

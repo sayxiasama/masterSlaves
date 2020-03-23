@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.ComponentScan;
 
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,MybatisAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 //@ComponentScan("com.ago.masterslaves.*")
 @MapperScan(value = "com.ago.masterslaves.mapper")
 @EnableConfigurationProperties
